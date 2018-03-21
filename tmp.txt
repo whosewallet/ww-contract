@@ -1,1 +1,0 @@
-ec push action acmv rwinfo '{"owner": "acmv", "address": "hello this is address", "testName": "show"}' -p acmv@active
