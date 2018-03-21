@@ -1,0 +1,53 @@
+{
+  "types": [{
+      "new_type_name": "account_name",
+      "type": "name"
+    }
+  ],
+
+  "structs": [{
+      "name": "hello",
+      "base": "",
+      "fields": [
+        {"name": "message", "type":"string"}
+      ]
+   },{
+      "name": "wwmaster",
+      "base": "",
+      "fields": [
+        {"name":"nickname", "type":"account_name"},
+        {"name":"wtype", "type":"uint32"},
+        {"name":"wadd", "type":"string"},
+        {"name":"ctype", "type":"uint32"},
+        {"name":"cvalue", "type":"string"}
+      ]
+    },{
+      "name": "wwinfo",
+      "base": "",
+      "fields": [
+        {"name":"tx_type", "type":"uint64"},
+        {"name":"tx_id", "type":"string"},
+        {"name":"tx_desc", "type":"string"}
+      ]
+    }
+  ],
+  "actions": [{
+      "name": "hello",
+      "type": "string"
+    }
+  ],
+  "tables": [{
+      "name": "wwmaster",
+      "type": "wwmaster",
+      "index_type": "i64",
+      "key_names" : ["nickname"],
+      "key_types" : ["account_name"]
+    }, {
+      "name": "wwinfo",
+      "type": "wwinfo",
+      "index_type": "i64",
+      "key_names" : ["tx_type"],
+      "key_types" : ["uint64"]
+    }
+  ]
+}
