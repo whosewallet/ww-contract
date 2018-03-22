@@ -44,16 +44,21 @@ namespace ww {
   class whosewallet {
   private:
     account_name _contract;
+    void wm_save(const wwmaster& r );
+    void wi_save(const account_name& code, const wwinfo& r );
 
   public:
     whosewallet( account_name contract = current_receiver() );
 
-    void wm_save(const wwmaster& r );
     wwmaster wm_get(const account_name& pk);
-
-    void wi_save(const account_name& code, const wwinfo& r );
     wwinfo wi_get(const account_name& code, const account_name& pk);
     // define common tables -- end
+
+    // define actions
+    // register new wallet address
+    void  registerNewWallet(const wwmaster& data);
+    // register new wallet address --end
+    // define actions -- end
 
     void apply( uint64_t code, uint64_t action );
   };

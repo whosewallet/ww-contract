@@ -1,13 +1,16 @@
 #!/bin/bash
 
-# CMD="eosioc -H leclevn -p 8888 --wallet-host leclevn --wallet-port 8888"
-CMD="eosioc"
-ACTION=rwinfo
+ACCOUNT=acmv
+CMD="eosioc -H leclevn -p 8888 --wallet-host leclevn --wallet-port 8888"
+#CMD="eosioc"
+ACTION=rnw
 
-$CMD push action acmv $ACTION '
+$CMD push action $ACCOUNT $ACTION '
   {
-    "owner": "acmv",
-    "address": "uuEEE cc blockchain co the la mot nen tang bong bong",
-    "tn": "aabboi"
+    "nickname": "acmv",
+    "wtype": "50",
+    "wadd": "add",
+    "ctype": "50",
+    "cvalue": "valuee"
   }
-' -p acmv@active
+' -p $ACCOUNT@active

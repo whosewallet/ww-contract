@@ -87,5 +87,18 @@ namespace ww {
       print("-- action: ", name(action), "\n  ");
       print("-- sender: ", name(current_sender()), "\n  ");
       print("-- receiver: ", name(current_receiver()), "\n  ");
+
+      if (action == N(rnw)) {
+        // whosewallet::registerNewWallet(unpack_action_data<wwmaster>());
+        return;
+      }
     }
+
+    // define actions
+    // register new wallet address
+    void  whosewallet::registerNewWallet(const wwmaster& data) {
+      this->wm_save(data);
+    }
+    // register new wallet address --end
+    // define actions -- end
 }
