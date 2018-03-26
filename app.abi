@@ -12,7 +12,7 @@
         {"name": "message", "type":"string"}
       ]
    },{
-      "name": "wwmaster",
+      "name": "wwallet",
       "base": "",
       "fields": [
         {"name":"id", "type":"uint64"},
@@ -21,7 +21,7 @@
         {"name":"w_add", "type":"string"}
       ]
     },{
-      "name": "wwinfo",
+      "name": "winfo",
       "base": "",
       "fields": [
         {"name":"tx_type", "type":"uint64"},
@@ -37,7 +37,7 @@
         {"name":"a_name", "type":"account_name"}
       ]
     },{
-      "name": "gwwmaster",
+      "name": "gwwallet",
       "base": "",
       "fields": [
         {"name":"w_add", "type":"string"}
@@ -51,19 +51,19 @@
       "name": "rnw",
       "type": "inrnw"
     }, {
-      "name": "gwwmaster",
-      "type": "gwwmaster"
+      "name": "gwwallet",
+      "type": "gwwallet"
     }
   ],
   "tables": [{
-      "name": "wwmaster",
-      "type": "wwmaster",
+      "name": "wwallet",
+      "type": "wwallet",
       "index_type": "i64",
       "key_names" : ["id"],
       "key_types" : ["uint64"]
     }, {
-      "name": "wwinfo",
-      "type": "wwinfo",
+      "name": "winfo",
+      "type": "winfo",
       "index_type": "i64",
       "key_names" : ["tx_type"],
       "key_types" : ["uint64"]

@@ -11,14 +11,14 @@ namespace ww {
     // print("---- current_receiver: ", name(_contract));
   }
   
-  void whosewallet::wm_save(const wwmaster& r ) {
+  void whosewallet::wm_save(const wwallet& r ) {
       // data table should stay on owner account
       const auto code = _contract;
       const auto scope = _contract;
       tbwm t( code, scope );
 
       // mapping data
-      auto f = [&](wwmaster& _r) {
+      auto f = [&](wwallet& _r) {
         _r.id        = r.id;
         _r.w_add     = r.w_add;
         _r.w_type    = r.w_type;
@@ -34,7 +34,7 @@ namespace ww {
       }
     }
 
-    wwmaster whosewallet::wm_get(const uint64_t& pk) {
+    wwallet whosewallet::wm_get(const uint64_t& pk) {
       // data table should stay on owner account
       const auto code = _contract;
       const auto scope = _contract;
@@ -47,13 +47,13 @@ namespace ww {
       return itr;
     }
 
-    void whosewallet::wi_save(const account_name& code, const wwinfo& r ) {
+    void whosewallet::wi_save(const account_name& code, const winfo& r ) {
       // data table should stay on owner account
       const auto scope = _contract;
       tbwi t( code, scope );
 
       // mapping data
-      auto f = [&](wwinfo& _r) {
+      auto f = [&](winfo& _r) {
         _r.tx_type = r.tx_type;
         _r.tx_id   = r.tx_id;
         _r.tx_desc = r.tx_desc;
@@ -68,7 +68,7 @@ namespace ww {
       }
     }
 
-    wwinfo whosewallet::wi_get(const account_name& code, const account_name& pk) {
+    winfo whosewallet::wi_get(const account_name& code, const account_name& pk) {
       // data table should stay on owner account
       const auto scope = _contract;
       const tbwi t( code,  scope);
@@ -82,8 +82,8 @@ namespace ww {
     // define common tables -- end
 
     // common
-    wwmaster whosewallet::toWwmaster(const inrnw& data) {
-      wwmaster res;
+    wwallet whosewallet::toWwallet(const inrnw& data) {
+      wwallet res;
       res.id = hashString(data.w_add);
       res.w_add = data.w_add;
       res.w_type = data.w_type;
@@ -105,8 +105,8 @@ namespace ww {
         case N(rnw):
           registerNewWallet(unpack_action_data<inrnw>());
           break;
-        case N(gwwmaster):
-          on(unpack_action_data<gwwmaster>());
+        case N(gwwallet):
+          on(unpack_action_data<gwwallet>());
           break;
       }
     }
@@ -118,10 +118,10 @@ namespace ww {
       print("-- w_add: ", data.w_add.c_str(), "\n ");
       print("-- a_name: ", name(data.a_name), "\n ");
 
-      wm_save(toWwmaster(data));
+      wm_save(toWwallet(data));
     }
     
-    void  whosewallet::on(const gwwmaster& data) {
+    void  whosewallet::on(const gwwallet& data) {
       print("-- w_add: ", data.w_add.c_str(), "\n ");
       auto wm = wm_get(hashString(data.w_add));
 
