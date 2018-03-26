@@ -141,7 +141,7 @@ namespace ww {
     }
     
     void  whosewallet::on(const gwwallet& data) {
-      print("-- w_add: ", data.w_add.c_str(), "\n ");
+      // print("-- w_add: ", data.w_add.c_str(), "\n ");
       auto wm = wm_get(hashString(data.w_add));
 
       print("-- w_type: ", wm.w_type, "\n ");
@@ -150,11 +150,14 @@ namespace ww {
     }
     
     void  whosewallet::on(const inwinfo& data) {
+      require_auth(data.a_name);
       wi_save(data.a_name, toWinfo(data));
     }
     
     void  whosewallet::on(const gwinfo& data) {
-      print("-- tx_id: ", data.tx_id.c_str(), "\n ");
+      require_auth(data.a_name);
+      
+      // print("-- tx_id: ", data.tx_id.c_str(), "\n ");
       auto wi = wi_get(data.a_name, hashString(data.tx_id));
 
       print("-- tx_type: ", wi.tx_type, "\n ");
