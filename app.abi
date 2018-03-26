@@ -24,7 +24,8 @@
       "name": "winfo",
       "base": "",
       "fields": [
-        {"name":"tx_type", "type":"uint64"},
+        {"name":"id", "type":"uint64"},
+        {"name":"tx_type", "type":"uint32"},
         {"name":"tx_id", "type":"string"},
         {"name":"tx_desc", "type":"string"}
       ]
@@ -42,6 +43,22 @@
       "fields": [
         {"name":"w_add", "type":"string"}
       ]
+    },{
+      "name": "gwinfo",
+      "base": "",
+      "fields": [
+        {"name":"a_name", "type":"account_name"},
+        {"name":"tx_id", "type":"string"}
+      ]
+    },{
+      "name": "inwinfo",
+      "base": "",
+      "fields": [
+        {"name":"a_name", "type":"account_name"},
+        {"name":"tx_type", "type":"uint32"},
+        {"name":"tx_id", "type":"string"},
+        {"name":"tx_desc", "type":"string"}
+      ]
     }
   ],
   "actions": [{
@@ -51,8 +68,14 @@
       "name": "rnw",
       "type": "inrnw"
     }, {
+      "name": "inwinfo",
+      "type": "inwinfo"
+    }, {
       "name": "gwwallet",
       "type": "gwwallet"
+    }, {
+      "name": "gwinfo",
+      "type": "gwinfo"
     }
   ],
   "tables": [{
@@ -65,7 +88,7 @@
       "name": "winfo",
       "type": "winfo",
       "index_type": "i64",
-      "key_names" : ["tx_type"],
+      "key_names" : ["id"],
       "key_types" : ["uint64"]
     }
   ]

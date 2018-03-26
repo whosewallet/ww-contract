@@ -28,15 +28,16 @@ namespace ww {
   };
 
   struct winfo { /* user table */
-    uint64_t tx_type;
+    uint64_t id;
+    uint32_t tx_type;
     string tx_id;
     string tx_desc;
 
     auto primary_key() const {
-      return tx_type;
+      return id;
     }
 
-    EOSLIB_SERIALIZE( winfo, (tx_type)(tx_id)(tx_desc) )
+    EOSLIB_SERIALIZE( winfo, (id)(tx_type)(tx_id)(tx_desc) )
   };
 
   typedef eosio::multi_index<N(wwallet), wwallet> tbwm;
@@ -51,11 +52,27 @@ namespace ww {
 
     EOSLIB_SERIALIZE( inrnw, (w_add)(w_type)(a_name) )
   };
+
+  struct inwinfo {
+    account_name a_name;
+    uint32_t tx_type;
+    string tx_id;
+    string tx_desc;
+
+    EOSLIB_SERIALIZE( inwinfo, (a_name)(tx_type)(tx_id)(tx_desc) )
+  };
   
   struct gwwallet {
     string w_add;
 
     EOSLIB_SERIALIZE( gwwallet, (w_add) )
+  };
+  
+  struct gwinfo {
+    account_name a_name;
+    string tx_id;
+
+    EOSLIB_SERIALIZE( gwinfo, (a_name)(tx_id) )
   };
   // define action input -- end
 
@@ -75,6 +92,8 @@ namespace ww {
     // register new wallet address
     void registerNewWallet(const inrnw& data);
     void on(const gwwallet& data);
+    void on(const inwinfo& data);
+    void on(const gwinfo& data);
     // register new wallet address --end
     // define actions -- end
 
@@ -82,6 +101,7 @@ namespace ww {
 
     // common
     wwallet toWwallet(const inrnw& data);
+    winfo toWinfo(const inwinfo& data);
     // common -- end
   };
 }

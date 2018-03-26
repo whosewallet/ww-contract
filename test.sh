@@ -37,7 +37,28 @@ $cmd push action $ACCOUNT gwwallet '
   }
 ' -p $ACCOUNT@active
 
+
+$cmd push action $ACCOUNT inwinfo '
+  {
+    "a_name": "acmv",
+    "tx_type": "20",
+    "tx_id": "txid1",
+    "tx_desc": "test saving tx info"
+  }
+' -p $ACCOUNT@active
+
+$cmd push action $ACCOUNT gwinfo '
+  {
+    "a_name": "acmv",
+    "tx_id": "txid1"
+  }
+' -p $ACCOUNT@active
+
 # view tables
 MY_CMD="$cmd get table $ACCOUNT $ACCOUNT wwallet"
+echo $MY_CMD
+$MY_CMD
+
+MY_CMD="$cmd get table $ACCOUNT $ACCOUNT winfo"
 echo $MY_CMD
 $MY_CMD
