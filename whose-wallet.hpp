@@ -6,24 +6,25 @@
 #include <eosiolib/eosio.hpp>
 #include <eosiolib/asset.hpp>
 #include <eosiolib/multi_index.hpp>
+#include <functional>
 
 using namespace eosio;
 namespace ww {
   using std::string;
+  const std::hash<string> hashString;
 
   // define common tables
   struct wwmaster {
-    account_name nickname;
-    uint32_t wtype;
-    string wadd;
-    uint32_t ctype;
-    string cvalue;
+    uint64_t id;
+    string w_add;
+    uint32_t w_type;
+    account_name a_name;
 
     auto primary_key() const {
-      return nickname;
+      return id;
     }
 
-    EOSLIB_SERIALIZE( wwmaster, (nickname)(wtype)(wadd)(ctype)(cvalue) )
+    EOSLIB_SERIALIZE( wwmaster, (id)(w_add)(w_type)(a_name) )
   };
 
   struct wwinfo { /* user table */
@@ -40,6 +41,23 @@ namespace ww {
 
   typedef eosio::multi_index<N(wwmaster), wwmaster> tbwm;
   typedef eosio::multi_index<N(wwinfo), wwinfo> tbwi;
+  // define common tables -- end
+
+  // define action input
+  struct inrnw {
+    string w_add;
+    uint32_t w_type;
+    account_name a_name;
+
+    EOSLIB_SERIALIZE( inrnw, (w_add)(w_type)(a_name) )
+  };
+  
+  struct gwwmaster {
+    string w_add;
+
+    EOSLIB_SERIALIZE( gwwmaster, (w_add) )
+  };
+  // define action input -- end
 
   class whosewallet {
   private:
@@ -52,14 +70,18 @@ namespace ww {
 
     wwmaster wm_get(const account_name& pk);
     wwinfo wi_get(const account_name& code, const account_name& pk);
-    // define common tables -- end
 
     // define actions
     // register new wallet address
-    void  registerNewWallet(const wwmaster& data);
+    void registerNewWallet(const inrnw& data);
+    void on(const gwwmaster& data);
     // register new wallet address --end
     // define actions -- end
 
     void apply( uint64_t code, uint64_t action );
+
+    // common
+    wwmaster toWwmaster(const inrnw& data);
+    // common -- end
   };
 }

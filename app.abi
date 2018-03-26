@@ -15,11 +15,10 @@
       "name": "wwmaster",
       "base": "",
       "fields": [
-        {"name":"nickname", "type":"account_name"},
-        {"name":"wtype", "type":"uint32"},
-        {"name":"wadd", "type":"string"},
-        {"name":"ctype", "type":"uint32"},
-        {"name":"cvalue", "type":"string"}
+        {"name":"id", "type":"uint64"},
+        {"name":"a_name", "type":"account_name"},
+        {"name":"w_type", "type":"uint32"},
+        {"name":"w_add", "type":"string"}
       ]
     },{
       "name": "wwinfo",
@@ -29,6 +28,20 @@
         {"name":"tx_id", "type":"string"},
         {"name":"tx_desc", "type":"string"}
       ]
+    },{
+      "name": "inrnw",
+      "base": "",
+      "fields": [
+        {"name":"w_add", "type":"string"},
+        {"name":"w_type", "type":"uint32"},
+        {"name":"a_name", "type":"account_name"}
+      ]
+    },{
+      "name": "gwwmaster",
+      "base": "",
+      "fields": [
+        {"name":"w_add", "type":"string"}
+      ]
     }
   ],
   "actions": [{
@@ -36,15 +49,18 @@
       "type": "string"
     }, {
       "name": "rnw",
-      "type": "wwmaster"
+      "type": "inrnw"
+    }, {
+      "name": "gwwmaster",
+      "type": "gwwmaster"
     }
   ],
   "tables": [{
       "name": "wwmaster",
       "type": "wwmaster",
       "index_type": "i64",
-      "key_names" : ["nickname"],
-      "key_types" : ["account_name"]
+      "key_names" : ["id"],
+      "key_types" : ["uint64"]
     }, {
       "name": "wwinfo",
       "type": "wwinfo",

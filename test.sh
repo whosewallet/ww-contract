@@ -1,16 +1,43 @@
 #!/bin/bash
 
+cmd='cleos -H leclevn -p 8888 --wallet-host leclevn --wallet-port 8888'
+
+for i in "$@"
+do
+
+echo "---- params -- $i"
+
+case $i in
+    -lc|--local)
+    echo "${i#*=}"
+    cmd=cleos
+    shift # past argument=value
+    ;;
+    *)
+          # unknown option
+    echo unknown option
+    ;;
+esac
+done
+
 ACCOUNT=acmv
-CMD="eosioc -H leclevn -p 8888 --wallet-host leclevn --wallet-port 8888"
-#CMD="eosioc"
 ACTION=rnw
 
-$CMD push action $ACCOUNT $ACTION '
+$cmd push action $ACCOUNT $ACTION '
   {
-    "nickname": "acmv",
-    "wtype": "50",
-    "wadd": "add",
-    "ctype": "50",
-    "cvalue": "valuee"
+    "w_add": "a3",
+    "w_type": "50",
+    "a_name": "hello"
   }
 ' -p $ACCOUNT@active
+
+$cmd push action $ACCOUNT gwwmaster '
+  {
+    "w_add": "a2"
+  }
+' -p $ACCOUNT@active
+
+# view tables
+MY_CMD="$cmd get table $ACCOUNT $ACCOUNT wwmaster"
+echo $MY_CMD
+$MY_CMD
