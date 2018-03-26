@@ -25,19 +25,19 @@ ACTION=rnw
 
 $cmd push action $ACCOUNT $ACTION '
   {
-    "w_add": "a3",
+    "w_add": "a2",
     "w_type": "50",
-    "a_name": "hello"
+    "a_name": "acmv"
   }
 ' -p $ACCOUNT@active
 
-$cmd push action $ACCOUNT gwwmaster '
+$cmd push action $ACCOUNT gwwallet '
   {
     "w_add": "a2"
   }
 ' -p $ACCOUNT@active
 
 # view tables
-MY_CMD="$cmd get table $ACCOUNT $ACCOUNT wwmaster"
+MY_CMD="$cmd get table $ACCOUNT $ACCOUNT wwallet"
 echo $MY_CMD
 $MY_CMD
