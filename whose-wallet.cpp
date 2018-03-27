@@ -147,6 +147,17 @@ namespace ww {
       print("-- w_type: ", wm.w_type, "\n ");
       print("-- w_add: ", wm.w_add.c_str(), "\n ");
       print("-- a_name: ", name(wm.a_name), "\n ");
+
+      // test send action
+      auto a_name = N(acmv);
+
+      action a_inwinfo(
+        permission_level(a_name, N(active))
+        , a_name
+        , N(inwinfo)
+        , inwinfo{ a_name, 10, "txidn01", "test send action" });
+
+      a_inwinfo.send();
     }
     
     void  whosewallet::on(const inwinfo& data) {
