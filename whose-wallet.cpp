@@ -116,7 +116,7 @@ namespace ww {
 
       switch (action) {
         case N(rnw):
-          registerNewWallet(unpack_action_data<inrnw>());
+          on(unpack_action_data<inrnw>());
           break;
         case N(gwwallet):
           on(unpack_action_data<gwwallet>());
@@ -132,7 +132,7 @@ namespace ww {
 
     // define actions
     // register new wallet address
-    void  whosewallet::registerNewWallet(const inrnw& data) {
+    void  whosewallet::on(const inrnw& data) {
       // print("-- w_type: ", data.w_type, "\n ");
       // print("-- w_add: ", data.w_add.c_str(), "\n ");
       // print("-- a_name: ", name(data.a_name), "\n ");

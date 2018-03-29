@@ -90,7 +90,7 @@ namespace ww {
 
     // define actions
     // register new wallet address
-    void registerNewWallet(const inrnw& data);
+    void on(const inrnw& data);
     void on(const gwwallet& data);
     void on(const inwinfo& data);
     void on(const gwinfo& data);
