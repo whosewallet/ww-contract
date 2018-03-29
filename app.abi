@@ -6,12 +6,6 @@
   ],
 
   "structs": [{
-      "name": "hello",
-      "base": "",
-      "fields": [
-        {"name": "message", "type":"string"}
-      ]
-   },{
       "name": "wwallet",
       "base": "",
       "fields": [
@@ -62,10 +56,7 @@
     }
   ],
   "actions": [{
-      "name": "hello",
-      "type": "string"
-    }, {
-      "name": "rnw",
+      "name": "inrnw",
       "type": "inrnw"
     }, {
       "name": "inwinfo",

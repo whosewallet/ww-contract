@@ -115,7 +115,7 @@ namespace ww {
       // print("-- receiver: ", name(current_receiver()), "\n  ");
 
       switch (action) {
-        case N(rnw):
+        case N(inrnw):
           on(unpack_action_data<inrnw>());
           break;
         case N(gwwallet):
