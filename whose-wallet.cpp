@@ -149,15 +149,15 @@ namespace ww {
       print("-- a_name: ", name(wm.a_name), "\n ");
 
       // test send action
-      auto a_name = N(acmv);
+      // auto a_name = N(acmv);
 
-      action a_inwinfo(
-        permission_level(a_name, N(active))
-        , a_name
-        , N(inwinfo)
-        , inwinfo{ a_name, 10, "txidn01", "test send action" });
+      // action a_inwinfo(
+      //   permission_level(a_name, N(active))
+      //   , a_name
+      //   , N(inwinfo)
+      //   , inwinfo{ a_name, 10, "txidn01", "test send action" });
 
-      a_inwinfo.send();
+      // a_inwinfo.send();
     }
     
     void  whosewallet::on(const inwinfo& data) {

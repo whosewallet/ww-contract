@@ -11,9 +11,9 @@
 extern "C" {
 
     /// The apply method implements the dispatch of events to this contract
-    void apply( uint64_t code, uint64_t action ) {
+    void apply(uint64_t receiver, uint64_t code, uint64_t action ) {
       // print( "Hello World: ", eosio::name(code), "->", eosio::name(action), "\n" );
-      ww::whosewallet().apply(code, action);
+      ww::whosewallet(receiver).apply(code, action);
     }
 
 } // extern "C"

@@ -25,9 +25,7 @@ ACTION=rnw
 
 $cmd push action $ACCOUNT $ACTION '
   {
-    "w_add": "a2",
-    "w_type": "50",
-    "a_name": "acmv"
+    "w_add": "a2", "w_type": "50", "a_name": "acmv"
   }
 ' -p $ACCOUNT@active
 

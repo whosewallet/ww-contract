@@ -16,15 +16,15 @@ namespace ww {
   // define common tables
   struct wwallet {
     uint64_t id;
-    string w_add;
-    uint32_t w_type;
     account_name a_name;
+    uint32_t w_type;
+    string w_add;
 
     auto primary_key() const {
       return id;
     }
 
-    EOSLIB_SERIALIZE( wwallet, (id)(w_add)(w_type)(a_name) )
+    EOSLIB_SERIALIZE( wwallet, (id)(a_name)(w_type)(w_add) )
   };
 
   struct winfo { /* user table */
@@ -83,7 +83,7 @@ namespace ww {
     void wi_save(const account_name& code, const winfo& r );
 
   public:
-    whosewallet( account_name contract = current_receiver() );
+    whosewallet(account_name contract);
 
     wwallet wm_get(const account_name& pk);
     winfo wi_get(const account_name& code, const account_name& pk);
