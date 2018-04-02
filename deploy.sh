@@ -21,13 +21,13 @@ case $i in
 esac
 done
 
-OUT=app.wast
+OUT=main.wast
 ACCOUNT=acmv
 LOG_FILE=deploy.log
 
 echo command =  $cmd
 
-$cmd set contract $ACCOUNT $OUT app.abi > $LOG_FILE
+$cmd set contract $ACCOUNT ./ $OUT main.abi > $LOG_FILE
 cat $LOG_FILE
 
 $cmd get code -a detail.api $ACCOUNT

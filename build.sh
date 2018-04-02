@@ -1,6 +1,6 @@
 #!/bin/bash
 
-OUT=app.wast
+OUT=main.wast
 IN=main.cpp
 
 eosiocpp -o $OUT $IN

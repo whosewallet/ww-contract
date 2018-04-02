@@ -146,7 +146,7 @@ namespace ww {
 
       print("-- w_type: ", wm.w_type, "\n ");
       print("-- w_add: ", wm.w_add.c_str(), "\n ");
-      print("-- a_name: ", name(wm.a_name), "\n ");
+      print("-- a_name: ", wm.a_name, "\n ");
 
       // test send action
       // auto a_name = N(acmv);

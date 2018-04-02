@@ -1,5 +1,5 @@
 detail.api
 .idea/
-app.wast
+*.wast
 *.log
 .vscode/
