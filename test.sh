@@ -20,12 +20,11 @@ case $i in
 esac
 done
 
-ACCOUNT=acmv
-ACTION=rnw
+ACCOUNT=whosewallet
 
-$cmd push action $ACCOUNT $ACTION '
+$cmd push action $ACCOUNT inrnw '
   {
-    "w_add": "a2", "w_type": "50", "a_name": "acmv"
+    "w_add": "a2", "w_type": "50", "a_name": "${ACCOUNT}"
   }
 ' -p $ACCOUNT@active
 
@@ -38,7 +37,7 @@ $cmd push action $ACCOUNT gwwallet '
 
 $cmd push action $ACCOUNT inwinfo '
   {
-    "a_name": "acmv",
+    "a_name": "${ACCOUNT}",
     "tx_type": "20",
     "tx_id": "txid1",
     "tx_desc": "test saving tx info"
@@ -47,7 +46,7 @@ $cmd push action $ACCOUNT inwinfo '
 
 $cmd push action $ACCOUNT gwinfo '
   {
-    "a_name": "acmv",
+    "a_name": "${ACCOUNT}",
     "tx_id": "txid1"
   }
 ' -p $ACCOUNT@active

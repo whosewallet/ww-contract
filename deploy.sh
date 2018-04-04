@@ -22,7 +22,7 @@ esac
 done
 
 OUT=main.wast
-ACCOUNT=acmv
+ACCOUNT=whosewallet
 LOG_FILE=deploy.log
 
 echo command =  $cmd

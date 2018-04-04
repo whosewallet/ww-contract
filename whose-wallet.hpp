@@ -6,12 +6,11 @@
 #include <eosiolib/eosio.hpp>
 #include <eosiolib/asset.hpp>
 #include <eosiolib/multi_index.hpp>
-#include <functional>
 
 using namespace eosio;
 namespace ww {
   using std::string;
-  const std::hash<string> hashString;
+  uint64_t hashString(string s);
 
   // define common tables
   struct wwallet {
@@ -79,7 +78,20 @@ namespace ww {
   class whosewallet {
   private:
     account_name _contract;
+    /**
+     * Storing wallet index
+     * Help searching user by wallet address
+     * 
+    **/
     void wm_save(const wwallet& r );
+
+    /**
+     * Storing to user-account
+     * Help viewing user wallets
+     * 
+    **/
+    void wm_save_local(const wwallet& r );
+
     void wi_save(const account_name& code, const winfo& r );
 
   public:
@@ -91,9 +103,7 @@ namespace ww {
     // define actions
     // register new wallet address
     void on(const inrnw& data);
-    void on(const gwwallet& data);
     void on(const inwinfo& data);
-    void on(const gwinfo& data);
     // register new wallet address --end
     // define actions -- end
 

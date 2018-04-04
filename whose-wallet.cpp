@@ -10,171 +10,170 @@ namespace ww {
   whosewallet::whosewallet( account_name contract ): _contract(contract) {
     // print("---- current_receiver: ", name(_contract));
   }
+
+  uint64_t hashString(string str) {
+    uint64_t hash = 5381;
+    char c;
+    auto s = str.c_str();
+    
+    while ((c = *s++)) {
+      hash = ((hash << 5) + hash) + c;
+    }
+    
+    return hash;
+  }
   
   void whosewallet::wm_save(const wwallet& r ) {
-      // data table should stay on owner account
-      const auto code = _contract;
-      const auto scope = _contract;
-      tbwm t( code, scope );
+    require_auth(_contract);
 
-      // mapping data
-      auto f = [&](wwallet& _r) {
-        _r.id        = r.id;
-        _r.w_add     = r.w_add;
-        _r.w_type    = r.w_type;
-        _r.a_name    = r.a_name;
-      };
-      
-      auto itr = t.find( r.id );
-      
-      if( itr != t.end() ) {
-        t.modify( itr, code, f);
-      } else {
-        t.emplace( code, f);
-      }
-    }
+    const auto code = _contract;
+    const auto scope = _contract;
+    tbwm t( code, scope );
 
-    wwallet whosewallet::wm_get(const uint64_t& pk) {
-      // data table should stay on owner account
-      const auto code = _contract;
-      const auto scope = _contract;
-      const tbwm t( code,  scope);
-
-      // iterator
-      const auto& itr = t.get( pk );
-      t.end();
-
-      return itr;
-    }
-
-    void whosewallet::wi_save(const account_name& code, const winfo& r ) {
-      // data table should stay on owner account
-      const auto scope = _contract;
-      tbwi t( code, scope );
-
-      // mapping data
-      auto f = [&](winfo& _r) {
-        _r.id      = r.id;
-        _r.tx_type = r.tx_type;
-        _r.tx_id   = r.tx_id;
-        _r.tx_desc = r.tx_desc;
-      };
-      
-      auto itr = t.find( r.tx_type );
-      
-      if( itr != t.end() ) {
-        t.modify( itr, code, f);
-      } else {
-        t.emplace( code, f);
-      }
-    }
-
-    winfo whosewallet::wi_get(const account_name& code, const account_name& pk) {
-      // data table should stay on owner account
-      const auto scope = _contract;
-      const tbwi t( code,  scope);
-
-      // iterator
-      const auto& itr = t.get( pk );
-      t.end();
-
-      return itr;
-    }
-    // define common tables -- end
-
-    // common
-    wwallet whosewallet::toWwallet(const inrnw& data) {
-      wwallet res;
-      res.id = hashString(data.w_add);
-      res.w_add = data.w_add;
-      res.w_type = data.w_type;
-      res.a_name = data.a_name;
-
-      // print("hash address value: ", res.id, "\n ");
-
-      return res;
-    }
+    // mapping data
+    auto f = [&](wwallet& _r) {
+      _r.id        = r.id;
+      _r.w_add     = r.w_add;
+      _r.w_type    = r.w_type;
+      _r.a_name    = r.a_name;
+    };
     
-    winfo whosewallet::toWinfo(const inwinfo& data) {
-      winfo res;
-      res.id = hashString(data.tx_id);
-      res.tx_type = data.tx_type;
-      res.tx_id = data.tx_id;
-      res.tx_desc = data.tx_desc;
-
-      // print("hash address value: ", res.id, "\n ");
-
-      return res;
-    }
-    // common -- end
-
-    void whosewallet::apply( uint64_t code, uint64_t action ) {
-      // print("-- code: ", name(code), "\n  ");
-      // print("-- action: ", name(action), "\n  ");
-      // print("-- sender: ", name(current_sender()), "\n  ");
-      // print("-- receiver: ", name(current_receiver()), "\n  ");
-
-      switch (action) {
-        case N(inrnw):
-          on(unpack_action_data<inrnw>());
-          break;
-        case N(gwwallet):
-          on(unpack_action_data<gwwallet>());
-          break;
-        case N(gwinfo):
-          on(unpack_action_data<gwinfo>());
-          break;
-        case N(inwinfo):
-          on(unpack_action_data<inwinfo>());
-          break;
-      }
-    }
-
-    // define actions
-    // register new wallet address
-    void  whosewallet::on(const inrnw& data) {
-      // print("-- w_type: ", data.w_type, "\n ");
-      // print("-- w_add: ", data.w_add.c_str(), "\n ");
-      // print("-- a_name: ", name(data.a_name), "\n ");
-
-      wm_save(toWwallet(data));
-    }
+    auto itr = t.find( r.id );
     
-    void  whosewallet::on(const gwwallet& data) {
-      // print("-- w_add: ", data.w_add.c_str(), "\n ");
-      auto wm = wm_get(hashString(data.w_add));
-
-      print("-- w_type: ", wm.w_type, "\n ");
-      print("-- w_add: ", wm.w_add.c_str(), "\n ");
-      print("-- a_name: ", wm.a_name, "\n ");
-
-      // test send action
-      // auto a_name = N(acmv);
-
-      // action a_inwinfo(
-      //   permission_level(a_name, N(active))
-      //   , a_name
-      //   , N(inwinfo)
-      //   , inwinfo{ a_name, 10, "txidn01", "test send action" });
-
-      // a_inwinfo.send();
+    if( itr != t.end() ) {
+      t.modify( itr, code, f);
+    } else {
+      t.emplace( code, f);
     }
+  }
+
+
+  
+  void whosewallet::wm_save_local(const wwallet& r ) {
+    require_auth(r.a_name);
+
+    const auto code = r.a_name;
+    const auto scope = code;
+    tbwm t( code, scope );
+
+    // mapping data
+    auto f = [&](wwallet& _r) {
+      _r.id        = r.id;
+      _r.w_add     = r.w_add;
+      _r.w_type    = r.w_type;
+    };
     
-    void  whosewallet::on(const inwinfo& data) {
-      require_auth(data.a_name);
-      wi_save(data.a_name, toWinfo(data));
-    }
+    auto itr = t.find( r.id );
     
-    void  whosewallet::on(const gwinfo& data) {
-      require_auth(data.a_name);
-      
-      // print("-- tx_id: ", data.tx_id.c_str(), "\n ");
-      auto wi = wi_get(data.a_name, hashString(data.tx_id));
-
-      print("-- tx_type: ", wi.tx_type, "\n ");
-      print("-- tx_id: ", wi.tx_id.c_str(), "\n ");
-      print("-- tx_desc: ", wi.tx_desc.c_str(), "\n ");
+    if( itr != t.end() ) {
+      t.modify( itr, code, f);
+    } else {
+      t.emplace( code, f);
     }
-    // register new wallet address --end
-    // define actions -- end
+  }
+
+  wwallet whosewallet::wm_get(const uint64_t& pk) {
+    // data table should stay on owner account
+    const auto code = _contract;
+    const auto scope = _contract;
+    const tbwm t( code,  scope);
+
+    // iterator
+    const auto& itr = t.get( pk );
+    t.end();
+
+    return itr;
+  }
+
+  void whosewallet::wi_save(const account_name& code, const winfo& r ) {
+    // data table should stay on owner account
+    const auto scope = _contract;
+    tbwi t( code, scope );
+
+    // mapping data
+    auto f = [&](winfo& _r) {
+      _r.id      = r.id;
+      _r.tx_type = r.tx_type;
+      _r.tx_id   = r.tx_id;
+      _r.tx_desc = r.tx_desc;
+    };
+    
+    auto itr = t.find( r.tx_type );
+    
+    if( itr != t.end() ) {
+      t.modify( itr, code, f);
+    } else {
+      t.emplace( code, f);
+    }
+  }
+
+  winfo whosewallet::wi_get(const account_name& code, const account_name& pk) {
+    // data table should stay on owner account
+    const auto scope = _contract;
+    const tbwi t( code,  scope);
+
+    // iterator
+    const auto& itr = t.get( pk );
+    t.end();
+
+    return itr;
+  }
+  // define common tables -- end
+
+  // common
+  wwallet whosewallet::toWwallet(const inrnw& data) {
+    wwallet res;
+    res.id = hashString(data.w_add);
+    res.w_add = data.w_add;
+    res.w_type = data.w_type;
+    res.a_name = data.a_name;
+
+    // print("hash address value: ", res.id, "\n ");
+
+    return res;
+  }
+  
+  winfo whosewallet::toWinfo(const inwinfo& data) {
+    winfo res;
+    res.id = hashString(data.tx_id);
+    res.tx_type = data.tx_type;
+    res.tx_id = data.tx_id;
+    res.tx_desc = data.tx_desc;
+
+    // print("hash address value: ", res.id, "\n ");
+
+    return res;
+  }
+  // common -- end
+
+  void whosewallet::apply( uint64_t code, uint64_t action ) {
+    // print("-- code: ", name(code), "\n  ");
+    // print("-- action: ", name(action), "\n  ");
+    // print("-- sender: ", name(current_sender()), "\n  ");
+    // print("-- receiver: ", name(current_receiver()), "\n  ");
+
+    switch (action) {
+      case N(inrnw):
+        on(unpack_action_data<inrnw>());
+        break;
+      case N(inwinfo):
+        on(unpack_action_data<inwinfo>());
+        break;
+    }
+  }
+
+  // define actions
+  // register new wallet address
+  void whosewallet::on(const inrnw& data) {
+    auto w = toWwallet(data);
+    wm_save(w);
+    wm_save_local(w);
+  }
+  
+  void whosewallet::on(const inwinfo& data) {
+    require_auth(data.a_name);
+    wi_save(data.a_name, toWinfo(data));
+  }
+  // register new wallet address --end
+  // define actions -- end
 }
