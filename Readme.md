@@ -5,6 +5,7 @@
 
 # Setup whosewallet master account
 1. Create key
+
 ```bash
 cleos create key && cleos create key
 
@@ -16,6 +17,7 @@ Public key: EOS6f39NisBEiFpMCZ4LaBHmtCUQ8wKcccLAY1rzSE2R7ZNHTS4C2
 ```
 
 2. Create account
+
 ```bash
 cleos create account eosio whosewallet EOS6Uab5iaypSdc2dRAkvsFx1SD5s4U9zzG2c4PViiVZDzwuLTKeE EOS6f39NisBEiFpMCZ4LaBHmtCUQ8wKcccLAY1rzSE2R7ZNHTS4C2
 ```
