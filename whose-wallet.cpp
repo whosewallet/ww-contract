@@ -33,8 +33,6 @@ namespace ww {
     // mapping data
     auto f = [&](wwallet& _r) {
       _r.id        = r.id;
-      _r.w_add     = r.w_add;
-      _r.w_type    = r.w_type;
       _r.a_name    = r.a_name;
     };
     
@@ -72,20 +70,8 @@ namespace ww {
     }
   }
 
-  wwallet whosewallet::wm_get(const uint64_t& pk) {
-    // data table should stay on owner account
-    const auto code = _contract;
-    const auto scope = _contract;
-    const tbwm t( code,  scope);
-
-    // iterator
-    const auto& itr = t.get( pk );
-    t.end();
-
-    return itr;
-  }
-
   void whosewallet::wi_save(const account_name& code, const winfo& r ) {
+    require_auth(code);
     // data table should stay on owner account
     const auto scope = _contract;
     tbwi t( code, scope );
@@ -106,18 +92,6 @@ namespace ww {
       t.emplace( code, f);
     }
   }
-
-  winfo whosewallet::wi_get(const account_name& code, const account_name& pk) {
-    // data table should stay on owner account
-    const auto scope = _contract;
-    const tbwi t( code,  scope);
-
-    // iterator
-    const auto& itr = t.get( pk );
-    t.end();
-
-    return itr;
-  }
   // define common tables -- end
 
   // common
@@ -127,8 +101,6 @@ namespace ww {
     res.w_add = data.w_add;
     res.w_type = data.w_type;
     res.a_name = data.a_name;
-
-    // print("hash address value: ", res.id, "\n ");
 
     return res;
   }
@@ -140,17 +112,11 @@ namespace ww {
     res.tx_id = data.tx_id;
     res.tx_desc = data.tx_desc;
 
-    // print("hash address value: ", res.id, "\n ");
-
     return res;
   }
   // common -- end
 
   void whosewallet::apply( uint64_t code, uint64_t action ) {
-    // print("-- code: ", name(code), "\n  ");
-    // print("-- action: ", name(action), "\n  ");
-    // print("-- sender: ", name(current_sender()), "\n  ");
-    // print("-- receiver: ", name(current_receiver()), "\n  ");
 
     switch (action) {
       case N(inrnw):
@@ -171,7 +137,6 @@ namespace ww {
   }
   
   void whosewallet::on(const inwinfo& data) {
-    require_auth(data.a_name);
     wi_save(data.a_name, toWinfo(data));
   }
   // register new wallet address --end

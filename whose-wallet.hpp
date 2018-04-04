@@ -97,9 +97,6 @@ namespace ww {
   public:
     whosewallet(account_name contract);
 
-    wwallet wm_get(const account_name& pk);
-    winfo wi_get(const account_name& code, const account_name& pk);
-
     // define actions
     // register new wallet address
     void on(const inrnw& data);
