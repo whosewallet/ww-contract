@@ -21,8 +21,12 @@ __NOTE:__ _Remember to replace owner key and active key with your own_
 # Build & deploy
 
 ```bash
-$ sh build.sh
-$ sh deploy.sh
+$ ./build.sh
+
+5 warnings generated.
+main.wast
+
+$ ./deploy.sh
 ````
 
 # Pre-define
