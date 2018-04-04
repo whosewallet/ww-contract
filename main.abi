@@ -6,20 +6,11 @@
   ],
 
   "structs": [{
-      "name": "wwallet",
-      "base": "",
-      "fields": [
-        {"name":"id", "type":"uint64"},
-        {"name":"a_name", "type":"account_name"},
-        {"name":"w_type", "type":"uint32"},
-        {"name":"w_add", "type":"string"}
-      ]
-    },{
       "name": "alwallet",
       "base": "",
       "fields": [
         {"name":"id", "type":"uint64"},
-        {"name":"a_name", "type":"account_name"},
+        {"name":"a_name", "type":"account_name"}
       ]
     },{
       "name": "mywallet",
@@ -66,7 +57,7 @@
     }
   ],
   "tables": [{
-      "name": "wwallet",
+      "name": "alwallet",
       "type": "alwallet",
       "index_type": "i64",
       "key_names" : ["id"],

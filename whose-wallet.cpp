@@ -28,10 +28,10 @@ namespace ww {
 
     const auto code = _contract;
     const auto scope = _contract;
-    tbwm t( code, scope );
+    tb_alwallet t( code, scope );
 
     // mapping data
-    auto f = [&](wwallet& _r) {
+    auto f = [&](alwallet& _r) {
       _r.id        = r.id;
       _r.a_name    = r.a_name;
     };
@@ -52,13 +52,13 @@ namespace ww {
 
     const auto code = r.a_name;
     const auto scope = code;
-    tbwm t( code, scope );
+    tb_mywallet t( code, scope );
 
     // mapping data
-    auto f = [&](wwallet& _r) {
+    auto f = [&](mywallet& _r) {
       _r.id        = r.id;
-      _r.w_add     = r.w_add;
       _r.w_type    = r.w_type;
+      _r.w_add     = r.w_add;
     };
     
     auto itr = t.find( r.id );

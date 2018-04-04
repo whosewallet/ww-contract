@@ -18,12 +18,29 @@ namespace ww {
     account_name a_name;
     uint32_t w_type;
     string w_add;
+  };
+  
+  struct alwallet {
+    uint64_t id;
+    account_name a_name;
 
     auto primary_key() const {
       return id;
     }
 
-    EOSLIB_SERIALIZE( wwallet, (id)(a_name)(w_type)(w_add) )
+    EOSLIB_SERIALIZE( alwallet, (id)(a_name) )
+  };
+
+  struct mywallet {
+    uint64_t id;
+    uint32_t w_type;
+    string w_add;
+
+    auto primary_key() const {
+      return id;
+    }
+
+    EOSLIB_SERIALIZE( mywallet, (id)(w_type)(w_add) )
   };
 
   struct winfo { /* user table */
@@ -39,7 +56,8 @@ namespace ww {
     EOSLIB_SERIALIZE( winfo, (id)(tx_type)(tx_id)(tx_desc) )
   };
 
-  typedef eosio::multi_index<N(wwallet), wwallet> tbwm;
+  typedef eosio::multi_index<N(alwallet), alwallet> tb_alwallet;
+  typedef eosio::multi_index<N(mywallet), mywallet> tb_mywallet;
   typedef eosio::multi_index<N(winfo), winfo> tbwi;
   // define common tables -- end
 
