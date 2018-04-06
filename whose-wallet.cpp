@@ -7,9 +7,6 @@
 
 using namespace eosio;
 namespace ww {
-  whosewallet::whosewallet( account_name contract ): _contract(contract) {
-    // print("---- current_receiver: ", name(_contract));
-  }
 
   uint64_t hashString(string str) {
     uint64_t hash = 5381;
@@ -24,10 +21,10 @@ namespace ww {
   }
   
   void whosewallet::wm_save(const wwallet& r ) {
-    require_auth(_contract);
+    require_auth(_self);
 
-    const auto code = _contract;
-    const auto scope = _contract;
+    const auto code = _self;
+    const auto scope = _self;
     tb_alwallet t( code, scope );
 
     // mapping data
@@ -44,8 +41,6 @@ namespace ww {
       t.emplace( code, f);
     }
   }
-
-
   
   void whosewallet::wm_save_local(const wwallet& r ) {
     require_auth(r.a_name);
@@ -73,7 +68,7 @@ namespace ww {
   void whosewallet::wi_save(const account_name& code, const winfo& r ) {
     require_auth(code);
     // data table should stay on owner account
-    const auto scope = _contract;
+    const auto scope = _self;
     tbwi t( code, scope );
 
     // mapping data
@@ -95,49 +90,29 @@ namespace ww {
   // define common tables -- end
 
   // common
-  wwallet whosewallet::toWwallet(const inrnw& data) {
-    wwallet res;
-    res.id = hashString(data.w_add);
-    res.w_add = data.w_add;
-    res.w_type = data.w_type;
-    res.a_name = data.a_name;
-
-    return res;
-  }
-  
-  winfo whosewallet::toWinfo(const inwinfo& data) {
-    winfo res;
-    res.id = hashString(data.tx_id);
-    res.tx_type = data.tx_type;
-    res.tx_id = data.tx_id;
-    res.tx_desc = data.tx_desc;
-
-    return res;
-  }
   // common -- end
-
-  void whosewallet::apply( uint64_t code, uint64_t action ) {
-
-    switch (action) {
-      case N(inrnw):
-        on(unpack_action_data<inrnw>());
-        break;
-      case N(inwinfo):
-        on(unpack_action_data<inwinfo>());
-        break;
-    }
-  }
 
   // define actions
   // register new wallet address
-  void whosewallet::on(const inrnw& data) {
-    auto w = toWwallet(data);
+  void whosewallet::inrnw(string w_add, uint32_t w_type, account_name a_name) {
+    wwallet w;
+    w.id = hashString(w_add);
+    w.w_add = w_add;
+    w.w_type = w_type;
+    w.a_name = a_name;
+
     wm_save(w);
     wm_save_local(w);
   }
   
-  void whosewallet::on(const inwinfo& data) {
-    wi_save(data.a_name, toWinfo(data));
+  void whosewallet::inwinfo(account_name a_name, uint32_t tx_type, string tx_id, string tx_desc) {
+    winfo wi;
+    wi.id = hashString(tx_id);
+    wi.tx_type = tx_type;
+    wi.tx_id = tx_id;
+    wi.tx_desc = tx_desc;
+
+    wi_save(a_name, wi);
   }
   // register new wallet address --end
   // define actions -- end

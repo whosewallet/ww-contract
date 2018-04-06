@@ -1,4 +1,5 @@
 #!/bin/bash
+ACCOUNT=whosewallet
 
 cmd='cleos -H leclevn -p 8888 --wallet-host leclevn --wallet-port 8888'
 
@@ -13,6 +14,18 @@ case $i in
     cmd=cleos
     shift # past argument=value
     ;;
+
+    -st|--setup)
+    echo "${i#*=}"
+    # create whosewallet account
+    
+    $cmd create account eosio $ACCOUNT EOS6Uab5iaypSdc2dRAkvsFx1SD5s4U9zzG2c4PViiVZDzwuLTKeE EOS6f39NisBEiFpMCZ4LaBHmtCUQ8wKcccLAY1rzSE2R7ZNHTS4C2
+    # create test account
+    $cmd create account whosewallet acmv EOS6Uab5iaypSdc2dRAkvsFx1SD5s4U9zzG2c4PViiVZDzwuLTKeE EOS6f39NisBEiFpMCZ4LaBHmtCUQ8wKcccLAY1rzSE2R7ZNHTS4C2
+    $cmd create account whosewallet haiz EOS6Uab5iaypSdc2dRAkvsFx1SD5s4U9zzG2c4PViiVZDzwuLTKeE EOS6f39NisBEiFpMCZ4LaBHmtCUQ8wKcccLAY1rzSE2R7ZNHTS4C2
+
+    shift # past argument=value
+    ;;
     *)
           # unknown option
     echo unknown option
@@ -20,42 +33,9 @@ case $i in
 esac
 done
 
-ACCOUNT=whosewallet
+$cmd push action whosewallet inrnw '{ "w_add": "0x1a4C8627eeCf38d7392B7637123a899ff559f0A0", "w_type": "100", "a_name": "acmv" }' -p whosewallet@active -p acmv@active
+$cmd push action whosewallet inrnw '{ "w_add": "12N22uVNofBYaNfjCSdzpVPcyd5Lfh11zq", "w_type": "50", "a_name": "haiz" }' -p whosewallet@active -p haiz@active
 
-$cmd push action $ACCOUNT inrnw '
-  {
-    "w_add": "a2", "w_type": "50", "a_name": "${ACCOUNT}"
-  }
-' -p $ACCOUNT@active
-
-$cmd push action $ACCOUNT gwwallet '
-  {
-    "w_add": "a2"
-  }
-' -p $ACCOUNT@active
-
-
-$cmd push action $ACCOUNT inwinfo '
-  {
-    "a_name": "${ACCOUNT}",
-    "tx_type": "20",
-    "tx_id": "txid1",
-    "tx_desc": "test saving tx info"
-  }
-' -p $ACCOUNT@active
-
-$cmd push action $ACCOUNT gwinfo '
-  {
-    "a_name": "${ACCOUNT}",
-    "tx_id": "txid1"
-  }
-' -p $ACCOUNT@active
-
-# view tables
-MY_CMD="$cmd get table $ACCOUNT $ACCOUNT wwallet"
-echo $MY_CMD
-$MY_CMD
-
-MY_CMD="$cmd get table $ACCOUNT $ACCOUNT winfo"
-echo $MY_CMD
-$MY_CMD
+$cmd get table whosewallet acmv mywallet
+$cmd get table whosewallet haiz mywallet
+$cmd get table whosewallet whosewallet alwallet

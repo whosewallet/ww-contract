@@ -4,7 +4,6 @@
  */
 #pragma one
 #include <eosiolib/eosio.hpp>
-#include <eosiolib/asset.hpp>
 #include <eosiolib/multi_index.hpp>
 
 using namespace eosio;
@@ -61,41 +60,8 @@ namespace ww {
   typedef eosio::multi_index<N(winfo), winfo> tbwi;
   // define common tables -- end
 
-  // define action input
-  struct inrnw {
-    string w_add;
-    uint32_t w_type;
-    account_name a_name;
-
-    EOSLIB_SERIALIZE( inrnw, (w_add)(w_type)(a_name) )
-  };
-
-  struct inwinfo {
-    account_name a_name;
-    uint32_t tx_type;
-    string tx_id;
-    string tx_desc;
-
-    EOSLIB_SERIALIZE( inwinfo, (a_name)(tx_type)(tx_id)(tx_desc) )
-  };
-  
-  struct gwwallet {
-    string w_add;
-
-    EOSLIB_SERIALIZE( gwwallet, (w_add) )
-  };
-  
-  struct gwinfo {
-    account_name a_name;
-    string tx_id;
-
-    EOSLIB_SERIALIZE( gwinfo, (a_name)(tx_id) )
-  };
-  // define action input -- end
-
-  class whosewallet {
+  class whosewallet : public contract {
   private:
-    account_name _contract;
     /**
      * Storing wallet index
      * Help searching user by wallet address
@@ -113,20 +79,15 @@ namespace ww {
     void wi_save(const account_name& code, const winfo& r );
 
   public:
-    whosewallet(account_name contract);
-
+    whosewallet( action_name self ):contract(self){}
     // define actions
     // register new wallet address
-    void on(const inrnw& data);
-    void on(const inwinfo& data);
+    void inrnw(string w_add, uint32_t w_type, account_name a_name);
+    void inwinfo(account_name a_name, uint32_t tx_type, string tx_id, string tx_desc);
     // register new wallet address --end
     // define actions -- end
 
-    void apply( uint64_t code, uint64_t action );
-
     // common
-    wwallet toWwallet(const inrnw& data);
-    winfo toWinfo(const inwinfo& data);
     // common -- end
   };
 }
