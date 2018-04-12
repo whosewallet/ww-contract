@@ -49,7 +49,11 @@ namespace ww {
     const auto scope = _self;
     tb_alwallet t( code, scope );
 
-    t.erase(alwallet{ r.id, r.a_name });
+    auto itr = t.find( r.id );
+    
+    if( itr != t.end() ) {
+      t.erase(itr);
+    }
   }
   
   void whosewallet::wm_save_local(const wwallet& r ) {
@@ -82,7 +86,13 @@ namespace ww {
     const auto scope = code;
     tb_mywallet t( code, scope );
     
-    t.erase(mywallet{ r.id, r.w_type, r.w_add });
+    auto itr = t.find( r.id );
+
+    print("rid: ", r.id);
+    
+    if( itr != t.end() ) {
+      t.erase(itr);
+    }
   }
 
   void whosewallet::wi_save(const account_name& code, const winfo& r ) {
