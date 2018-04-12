@@ -48,12 +48,7 @@ namespace ww {
     const auto code = _self;
     const auto scope = _self;
     tb_alwallet t( code, scope );
-
-    auto itr = t.find( r.id );
-    
-    if( itr != t.end() ) {
-      t.erase(itr);
-    }
+    t.erase(t.get(r.id));
   }
   
   void whosewallet::wm_save_local(const wwallet& r ) {
@@ -85,12 +80,7 @@ namespace ww {
     const auto code = r.a_name;
     const auto scope = code;
     tb_mywallet t( code, scope );
-    
-    auto itr = t.find( r.id );
-    
-    if( itr != t.end() ) {
-      t.erase(itr);
-    }
+    t.erase(t.get(r.id));
   }
 
   void whosewallet::wi_save(const account_name& code, const winfo& r ) {
@@ -123,35 +113,33 @@ namespace ww {
   // define actions
   // register new wallet address
   void whosewallet::inrnw(string w_add, uint32_t w_type, account_name a_name) {
-    wwallet w;
-    w.id = hashString(w_add);
-    w.w_add = w_add;
-    w.w_type = w_type;
-    w.a_name = a_name;
+    inrnwal(w_add, w_type, a_name);
+    inrnwmy(w_add, w_type, a_name);
+  }
 
-    wm_save(w);
-    wm_save_local(w);
+  void whosewallet::inrnwal(string w_add, uint32_t w_type, account_name a_name) {
+    wm_save(wwallet{hashString(w_add), a_name, w_type, w_add});
+  }
+
+  void whosewallet::inrnwmy(string w_add, uint32_t w_type, account_name a_name) {
+    wm_save_local(wwallet{hashString(w_add), a_name, w_type, w_add});
   }
   
   void whosewallet::inwinfo(account_name a_name, uint32_t tx_type, string tx_id, string tx_desc) {
-    winfo wi;
-    wi.id = hashString(tx_id);
-    wi.tx_type = tx_type;
-    wi.tx_id = tx_id;
-    wi.tx_desc = tx_desc;
-
-    wi_save(a_name, wi);
+    wi_save(a_name, winfo{hashString(tx_id), tx_type, tx_id, tx_desc});
   }
 
   void whosewallet::rmrnw(string w_add, uint32_t w_type, account_name a_name) {
-    wwallet w;
-    w.id = hashString(w_add);
-    w.w_add = w_add;
-    w.w_type = w_type;
-    w.a_name = a_name;
+    rmrnwal(w_add, w_type, a_name);
+    rmrnwmy(w_add, w_type, a_name);
+  }
 
-    wm_erase(w);
-    wm_erase_local(w);
+  void whosewallet::rmrnwal(string w_add, uint32_t w_type, account_name a_name) {
+    wm_erase(wwallet{hashString(w_add), a_name, w_type, w_add});
+  }
+
+  void whosewallet::rmrnwmy(string w_add, uint32_t w_type, account_name a_name) {
+    wm_erase_local(wwallet{hashString(w_add), a_name, w_type, w_add});
   }
   // register new wallet address --end
   // define actions -- end

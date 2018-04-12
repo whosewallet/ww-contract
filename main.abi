@@ -51,11 +51,23 @@
   "actions": [{
       "name": "inrnw",
       "type": "inrnw"
+    },{
+      "name": "inrnwal",
+      "type": "inrnw"
+    },{
+      "name": "inrnwmy",
+      "type": "inrnw"
     }, {
       "name": "inwinfo",
       "type": "inwinfo"
     }, {
       "name": "rmrnw",
+      "type": "inrnw"
+    }, {
+      "name": "rmrnwal",
+      "type": "inrnw"
+    }, {
+      "name": "rmrnwmy",
       "type": "inrnw"
     }
   ],

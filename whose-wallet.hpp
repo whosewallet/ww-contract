@@ -86,6 +86,8 @@ namespace ww {
     
     // add new wallet address
     void inrnw(string w_add, uint32_t w_type, account_name a_name);
+    void inrnwal(string w_add, uint32_t w_type, account_name a_name);
+    void inrnwmy(string w_add, uint32_t w_type, account_name a_name);
     
     // store information
     void inwinfo(account_name a_name, uint32_t tx_type, string tx_id, string tx_desc);
@@ -94,6 +96,8 @@ namespace ww {
      * Remove a address 
      */
     void rmrnw(string w_add, uint32_t w_type, account_name a_name);
+    void rmrnwal(string w_add, uint32_t w_type, account_name a_name);
+    void rmrnwmy(string w_add, uint32_t w_type, account_name a_name);
     // register new wallet address --end
     // define actions -- end
 
