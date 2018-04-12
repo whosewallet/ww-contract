@@ -17,9 +17,13 @@ case $i in
 
     -st|--setup)
     echo "${i#*=}"
-    # create whosewallet account
-    
+    # create whosewallet account    
     $cmd create account eosio $ACCOUNT EOS6Uab5iaypSdc2dRAkvsFx1SD5s4U9zzG2c4PViiVZDzwuLTKeE EOS6f39NisBEiFpMCZ4LaBHmtCUQ8wKcccLAY1rzSE2R7ZNHTS4C2
+    $cmd wallet import 5Kb4JsT35UtLBZ3G2WzALVP9LYrgTzoZg48igSN2dmKwxxGEBP
+    
+    ./build.sh
+    ./deploy.sh
+
     # create test account
     $cmd create account whosewallet acmv EOS6Uab5iaypSdc2dRAkvsFx1SD5s4U9zzG2c4PViiVZDzwuLTKeE EOS6f39NisBEiFpMCZ4LaBHmtCUQ8wKcccLAY1rzSE2R7ZNHTS4C2
     $cmd create account whosewallet haiz EOS6Uab5iaypSdc2dRAkvsFx1SD5s4U9zzG2c4PViiVZDzwuLTKeE EOS6f39NisBEiFpMCZ4LaBHmtCUQ8wKcccLAY1rzSE2R7ZNHTS4C2

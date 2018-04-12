@@ -41,6 +41,16 @@ namespace ww {
       t.emplace( code, f);
     }
   }
+
+  void whosewallet::wm_erase(const wwallet& r ) {
+    require_auth(_self);
+
+    const auto code = _self;
+    const auto scope = _self;
+    tb_alwallet t( code, scope );
+
+    t.erase(alwallet{ r.id, r.a_name });
+  }
   
   void whosewallet::wm_save_local(const wwallet& r ) {
     require_auth(r.a_name);
@@ -63,6 +73,16 @@ namespace ww {
     } else {
       t.emplace( code, f);
     }
+  }
+
+  void whosewallet::wm_erase_local(const wwallet& r ) {
+    require_auth(r.a_name);
+
+    const auto code = r.a_name;
+    const auto scope = code;
+    tb_mywallet t( code, scope );
+    
+    t.erase(mywallet{ r.id, r.w_type, r.w_add });
   }
 
   void whosewallet::wi_save(const account_name& code, const winfo& r ) {
@@ -113,6 +133,17 @@ namespace ww {
     wi.tx_desc = tx_desc;
 
     wi_save(a_name, wi);
+  }
+
+  void whosewallet::rmrnw(string w_add, uint32_t w_type, account_name a_name) {
+    wwallet w;
+    w.id = hashString(w_add);
+    w.w_add = w_add;
+    w.w_type = w_type;
+    w.a_name = a_name;
+
+    wm_erase(w);
+    wm_erase_local(w);
   }
   // register new wallet address --end
   // define actions -- end

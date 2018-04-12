@@ -54,6 +54,9 @@
     }, {
       "name": "inwinfo",
       "type": "inwinfo"
+    }, {
+      "name": "rmrnw",
+      "type": "inrnw"
     }
   ],
   "tables": [{

@@ -68,6 +68,7 @@ namespace ww {
      * 
     **/
     void wm_save(const wwallet& r );
+    void wm_erase(const wwallet& r );
 
     /**
      * Storing to user-account
@@ -75,15 +76,24 @@ namespace ww {
      * 
     **/
     void wm_save_local(const wwallet& r );
+    void wm_erase_local(const wwallet& r );
 
     void wi_save(const account_name& code, const winfo& r );
 
   public:
     whosewallet( action_name self ):contract(self){}
     // define actions
-    // register new wallet address
+    
+    // add new wallet address
     void inrnw(string w_add, uint32_t w_type, account_name a_name);
+    
+    // store information
     void inwinfo(account_name a_name, uint32_t tx_type, string tx_id, string tx_desc);
+
+    /**
+     * Remove a address 
+     */
+    void rmrnw(string w_add, uint32_t w_type, account_name a_name);
     // register new wallet address --end
     // define actions -- end
 

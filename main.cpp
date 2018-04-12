@@ -4,4 +4,4 @@
  */
 #include "whose-wallet.cpp"
 
-EOSIO_ABI( ww::whosewallet, (inrnw)(inwinfo) )
+EOSIO_ABI( ww::whosewallet, (inrnw)(inwinfo)(rmrnw) )
