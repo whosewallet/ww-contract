@@ -87,8 +87,6 @@ namespace ww {
     tb_mywallet t( code, scope );
     
     auto itr = t.find( r.id );
-
-    print("rid: ", r.id);
     
     if( itr != t.end() ) {
       t.erase(itr);

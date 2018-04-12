@@ -110,6 +110,14 @@ $ cleos get table whosewallet whosewallet alwallet
 
 ```
 
+# Delete a wallet address
+
+We want to remove wallet information of `haiz` account where wallet address `12N22uVNofBYaNfjCSdzpVPcyd5Lfh11zq` (a Bitcoin address)
+
+```bash
+cleos push action whosewallet rmrnw '{ "w_add": "12N22uVNofBYaNfjCSdzpVPcyd5Lfh11zq", "w_type": "50", "a_name": "haiz" }' -p whosewallet@active -p haiz@active
+```
+
 # Search user name by wallet id
 Suppose that we have wallet address `12N22uVNofBYaNfjCSdzpVPcyd5Lfh11zq` and we want to know whose it is belong to.
 
