@@ -54,8 +54,8 @@ namespace ww {
   void whosewallet::wm_save_local(const wwallet& r ) {
     require_auth(r.a_name);
 
-    const auto code = r.a_name;
-    const auto scope = code;
+    const auto code = _self;
+    const auto scope = r.a_name;
     tb_mywallet t( code, scope );
 
     // mapping data
@@ -77,8 +77,8 @@ namespace ww {
   void whosewallet::wm_erase_local(const wwallet& r ) {
     require_auth(r.a_name);
 
-    const auto code = r.a_name;
-    const auto scope = code;
+    const auto code = _self;
+    const auto scope = r.a_name;
     tb_mywallet t( code, scope );
     t.erase(t.get(r.id));
   }
