@@ -10,7 +10,9 @@
       "base": "",
       "fields": [
         {"name":"id", "type":"uint64"},
-        {"name":"a_name", "type":"account_name"}
+        {"name":"a_name", "type":"account_name"},
+        {"name":"w_type", "type":"uint32"},
+        {"name":"w_add", "type":"string"}
       ]
     },{
       "name": "mywallet",
@@ -68,6 +70,9 @@
       "type": "inrnw"
     }, {
       "name": "rmrnwmy",
+      "type": "inrnw"
+    }, {
+      "name": "inrnwan",
       "type": "inrnw"
     }
   ],

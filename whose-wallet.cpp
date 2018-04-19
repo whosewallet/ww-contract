@@ -31,6 +31,8 @@ namespace ww {
     auto f = [&](alwallet& _r) {
       _r.id        = r.id;
       _r.a_name    = r.a_name;
+      _r.w_type    = r.w_type;
+      _r.w_add     = r.w_add;
     };
     
     auto itr = t.find( r.id );
@@ -123,6 +125,10 @@ namespace ww {
 
   void whosewallet::inrnwmy(string w_add, uint32_t w_type, account_name a_name) {
     wm_save_local(wwallet{hashString(w_add), a_name, w_type, w_add});
+  }
+
+  void whosewallet::inrnwan(string w_add, uint32_t w_type, account_name a_name) {
+    wm_save(wwallet{hashString(w_add), a_name, w_type, w_add});
   }
   
   void whosewallet::inwinfo(account_name a_name, uint32_t tx_type, string tx_id, string tx_desc) {

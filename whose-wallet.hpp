@@ -22,12 +22,14 @@ namespace ww {
   struct alwallet {
     uint64_t id;
     account_name a_name;
+    uint32_t w_type;
+    string w_add;
 
     auto primary_key() const {
       return id;
     }
 
-    EOSLIB_SERIALIZE( alwallet, (id)(a_name) )
+    EOSLIB_SERIALIZE( alwallet, (id)(a_name)(w_type)(w_add) )
   };
 
   struct mywallet {
@@ -98,6 +100,12 @@ namespace ww {
     void rmrnw(string w_add, uint32_t w_type, account_name a_name);
     void rmrnwal(string w_add, uint32_t w_type, account_name a_name);
     void rmrnwmy(string w_add, uint32_t w_type, account_name a_name);
+
+    /**
+     * Anonymous user adds new wallet
+     */
+    void inrnwan(string w_add, uint32_t w_type, account_name a_name);
+
     // register new wallet address --end
     // define actions -- end
 
