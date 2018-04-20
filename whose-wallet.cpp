@@ -20,10 +20,31 @@ namespace ww {
     return hash;
   }
 
-  whosewallet::whosewallet(action_name self): contract(self), talwallet(_self, _self) {
-    //
-  }
+  whosewallet::whosewallet(action_name self):
+          contract(self),
+          talwallet(_self, _self),
+          tidxaname(_self, _self)
+  {}
   
+  void whosewallet::idxaname_save(const account_name& a_name ) {
+    require_auth(_self);
+
+    const auto code = _self;
+
+    // mapping data
+    auto f = [&](idxaname& _r) {
+      _r.a_name    = a_name;
+    };
+    
+    auto itr = tidxaname.find( a_name );
+    
+    if( itr != tidxaname.end() ) {
+      tidxaname.modify( itr, code, f);
+    } else {
+      tidxaname.emplace( code, f);
+    }
+  }
+
   void whosewallet::wm_save(const wwallet& r ) {
     require_auth(_self);
 
@@ -37,14 +58,17 @@ namespace ww {
       _r.w_add     = r.w_add;
       _r.anonymous = r.anonymous;
     };
-    
+
     auto itr = talwallet.find( r.id );
-    
+
     if( itr != talwallet.end() ) {
       talwallet.modify( itr, code, f);
     } else {
       talwallet.emplace( code, f);
     }
+
+    // store index account name
+    idxaname_save(r.a_name);
   }
 
   void whosewallet::wm_erase(const wwallet& r ) {

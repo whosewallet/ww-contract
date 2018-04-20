@@ -78,12 +78,13 @@ namespace ww {
     
   typedef eosio::multi_index<N(mywallet), mywallet> tb_mywallet;
   typedef eosio::multi_index<N(winfo), winfo> tbwi;
-  typedef eosio::multi_index<N(idxaname), idxaname> tidxaname;
+  typedef eosio::multi_index<N(idxaname), idxaname> tb_idxaname;
   // define common tables -- end
 
   class whosewallet : public contract {
   private:
     tb_alwallet talwallet;
+    tb_idxaname tidxaname;
     /**
      * Storing wallet index
      * Help searching user by wallet address
@@ -91,6 +92,8 @@ namespace ww {
     **/
     void wm_save(const wwallet& r );
     void wm_erase(const wwallet& r );
+
+    void idxaname_save(const account_name& a_name);
 
     /**
      * Storing to user-account
