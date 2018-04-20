@@ -17,6 +17,17 @@ namespace ww {
     account_name a_name;
     uint32_t w_type;
     string w_add;
+    uint8_t anonymous;
+  };
+  
+  struct idxaname {
+    account_name a_name;
+
+    auto primary_key() const {
+      return a_name;
+    }
+
+    EOSLIB_SERIALIZE( idxaname, (a_name) )
   };
   
   struct alwallet {
@@ -24,12 +35,17 @@ namespace ww {
     account_name a_name;
     uint32_t w_type;
     string w_add;
+    uint8_t anonymous;
 
     auto primary_key() const {
       return id;
     }
 
-    EOSLIB_SERIALIZE( alwallet, (id)(a_name)(w_type)(w_add) )
+    account_name get_a_name() const {
+      return a_name;
+    }
+
+    EOSLIB_SERIALIZE( alwallet, (id)(a_name)(w_type)(w_add)(anonymous) )
   };
 
   struct mywallet {
@@ -57,13 +73,17 @@ namespace ww {
     EOSLIB_SERIALIZE( winfo, (id)(tx_type)(tx_id)(tx_desc) )
   };
 
-  typedef eosio::multi_index<N(alwallet), alwallet> tb_alwallet;
+  typedef eosio::multi_index<N(alwallet), alwallet,
+    indexed_by<N(a_name), const_mem_fun<alwallet, account_name, &alwallet::get_a_name> >> tb_alwallet;
+    
   typedef eosio::multi_index<N(mywallet), mywallet> tb_mywallet;
   typedef eosio::multi_index<N(winfo), winfo> tbwi;
+  typedef eosio::multi_index<N(idxaname), idxaname> tidxaname;
   // define common tables -- end
 
   class whosewallet : public contract {
   private:
+    tb_alwallet talwallet;
     /**
      * Storing wallet index
      * Help searching user by wallet address
@@ -83,7 +103,7 @@ namespace ww {
     void wi_save(const account_name& code, const winfo& r );
 
   public:
-    whosewallet( action_name self ):contract(self){}
+    whosewallet( action_name self );
     // define actions
     
     // add new wallet address
@@ -105,6 +125,11 @@ namespace ww {
      * Anonymous user adds new wallet
      */
     void inrnwan(string w_add, uint32_t w_type, account_name a_name);
+
+    /**
+     * wallet by account name
+     */
+    void waacn(account_name a_name);
 
     // register new wallet address --end
     // define actions -- end

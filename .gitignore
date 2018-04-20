@@ -3,3 +3,4 @@ detail.api
 *.wast
 *.log
 .vscode/
+cmake-build-debug/

@@ -12,7 +12,14 @@
         {"name":"id", "type":"uint64"},
         {"name":"a_name", "type":"account_name"},
         {"name":"w_type", "type":"uint32"},
-        {"name":"w_add", "type":"string"}
+        {"name":"w_add", "type":"string"},
+        {"name":"anonymous", "type":"uint8"}
+      ]
+    },{
+      "name": "idxaname",
+      "base": "",
+      "fields": [
+        {"name":"a_name", "type":"account_name"}
       ]
     },{
       "name": "mywallet",
@@ -80,8 +87,14 @@
       "name": "alwallet",
       "type": "alwallet",
       "index_type": "i64",
-      "key_names" : ["id"],
-      "key_types" : ["uint64"]
+      "key_names" : ["id", "a_name"],
+      "key_types" : ["uint64", "account_name"]
+    },{
+      "name": "idxaname",
+      "type": "idxaname",
+      "index_type": "i64",
+      "key_names" : ["a_name"],
+      "key_types" : ["account_name"]
     },{
       "name": "mywallet",
       "type": "mywallet",
