@@ -61,6 +61,8 @@ namespace ww {
 
     auto itr = talwallet.find( r.id );
 
+    eosio_assert( itr == talwallet.end(), "wallet address was registered" );
+
     if( itr != talwallet.end() ) {
       talwallet.modify( itr, code, f);
     } else {
