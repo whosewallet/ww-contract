@@ -80,8 +80,17 @@ namespace ww {
 
   void whosewallet::wm_erase(const wwallet& r ) {
     require_auth(_self);
-
     talwallet.erase(talwallet.get(r.id));
+
+    // consolidate a_name index
+    const auto idx_a_name = talwallet.get_index<N(a_name)>();
+    const auto matched_a_name = idx_a_name.find(r.a_name);
+
+    if (matched_a_name == idx_a_name.end()) {
+      // erase idx a_name if there is no registered wallet address
+      idxaname_erase(r.a_name);
+    }
+    // consolidate a_name index -- end
   }
   
   void whosewallet::wm_save_local(const wwallet& r ) {
