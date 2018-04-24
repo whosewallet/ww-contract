@@ -45,6 +45,11 @@ namespace ww {
     }
   }
 
+  void whosewallet::idxaname_erase(const account_name& a_name ) {
+    require_auth(_self);
+    tidxaname.erase(tidxaname.get(a_name));
+  }
+
   void whosewallet::wm_save(const wwallet& r ) {
     require_auth(_self);
 

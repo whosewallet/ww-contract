@@ -94,6 +94,7 @@ namespace ww {
     void wm_erase(const wwallet& r );
 
     void idxaname_save(const account_name& a_name);
+    void idxaname_erase(const account_name& a_name);
 
     /**
      * Storing to user-account
